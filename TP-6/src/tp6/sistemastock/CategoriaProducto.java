@@ -20,5 +20,10 @@ public enum CategoriaProducto {
     public String getDescripcion() {
         return descripcion;
     }
+
+    @Override
+    public String toString() {
+        return "CategoriaProducto{" + "ordinal=" + ordinal() + ", name=" + name() + ", descripcion=" + descripcion + '}';
+    }
     
 }
