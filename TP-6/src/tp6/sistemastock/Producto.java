@@ -1,5 +1,7 @@
 package tp6.sistemastock;
 
+import java.util.Objects;
+
 /**
  *
  * @author Pedro Hidalgo
@@ -63,7 +65,7 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public void print() {
+    public void mostrarInfo() {
         System.out.println(
                 " " + nombre +
                 "\n  id: " + id +
@@ -83,4 +85,20 @@ public class Producto {
                 "\n  categoria: " + categoria +
                 "\n}";
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Producto)) return false;
+        Producto p = (Producto) o;
+        return id.equals(p.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
 }
