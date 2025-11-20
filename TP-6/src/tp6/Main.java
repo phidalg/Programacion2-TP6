@@ -1,6 +1,9 @@
 package tp6;
 
 import java.util.ArrayList;
+import tp6.sistemabiblioteca.Autor;
+import tp6.sistemabiblioteca.Biblioteca;
+import tp6.sistemabiblioteca.Libro;
 import tp6.sistemastock.CategoriaProducto;
 import tp6.sistemastock.Inventario;
 import tp6.sistemastock.Producto;
@@ -10,10 +13,15 @@ import tp6.sistemastock.Producto;
  * @author Pedro Hidalgo
  */
 public class Main {
+    
+    public static void separar(String s) {
+            System.out.println("\n*********************************************************************************************");
+            System.out.println("\n" + s + "\n");
+        }
 
     public static void main(String[] args) {
         
-        System.out.println("\nCaso práctico I: Sistema de inventario\n");
+        separar("Caso práctico I: Sistema de inventario");
         System.out.println(" Cargar productos al inventario y luego mostrar todos los productos del mismo:\n");
         
         Inventario inventario = new Inventario();
@@ -78,6 +86,56 @@ public class Main {
         
         System.out.println(" Mostrar las categorías disponibles con sus descripciones\n");
         inventario.mostrarCategoriasDisponibles();
+        
+        separar("Caso práctico II: Sistema de biblioteca");
+        
+        System.out.println("Crear la biblioteca, agregar algunos libros y mostrar su información:\n");
+        
+        Biblioteca biblioteca = new Biblioteca("Biblioteca de Babel");
+        Autor a1 = new Autor("a01", "Jorge Luis Borges", "Argentina");
+        Autor a2 = new Autor("a02", "Julio Cortázar", "Argentina, Francesa");
+        Autor a3 = new Autor("a03", "José Hernández", "Argentina");
+        biblioteca.agregarLibro("977-987-03-2749-2", "Historia universal de la infamia", 1935, a1);
+        biblioteca.agregarLibro("978-950-04-2749-1", "El Aleph", 1949, a1);
+        biblioteca.agregarLibro("678-910-23-4567-8", "Ficciones", 1944, a1);
+        biblioteca.agregarLibro("789-012-34-5678-9", "Bestiario", 1951, a2);
+        biblioteca.agregarLibro("890-123-45-6789-0", "El Gaucho Martín Fierro", 1872, a3);
+        
+        System.out.println();
+        biblioteca.listarLibros();
+        
+        System.out.println("\nListar todos los autores de los libros disponibles en la biblioteca\n");
+        
+        biblioteca.mostrarAutoresDisponibles();
+        
+        System.out.println("\nInformación completa de los autores:\n");
+        
+        for (Autor a : biblioteca.autoresDisponibles()) {
+            a.mostrarInfo();
+            System.out.println();
+        }
+        
+        System.out.println("\nBuscar un libro por su ISBN y mostrar su información\n");
+
+        biblioteca.buscarLibroPorIsbn("678-910-23-4567-8").mostrarInfo();
+        
+        System.out.println("\nFiltrar y mostrar los libros publicados en un año específico (1872)\n");
+        
+        for (Libro libro : biblioteca.filtrarLibrosPorAnio(1872)) {
+            libro.mostrarInfo();
+        }
+        
+        System.out.println("\nEliminar un libro por su ISBN y listar los libros restantes");
+        System.out.println("Se elimina El Aleph:\n");
+        
+        biblioteca.eliminarLibro("978-950-04-2749-1");
+        biblioteca.listarLibros();
+        
+        System.out.println("\nMostrar la cantidad total de libros en la biblioteca\n");
+        System.out.println("Libros disponibles en la " + biblioteca.getNombre() + ": " + biblioteca.obtenerCantidadLibros());
+        
+        separar("Caso práctico III: Sistema académico");
+        
     }
     
 }
