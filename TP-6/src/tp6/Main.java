@@ -1,6 +1,9 @@
 package tp6;
 
 import java.util.ArrayList;
+import tp6.sistemaacademico.Curso;
+import tp6.sistemaacademico.Profesor;
+import tp6.sistemaacademico.Universidad;
 import tp6.sistemabiblioteca.Autor;
 import tp6.sistemabiblioteca.Biblioteca;
 import tp6.sistemabiblioteca.Libro;
@@ -14,9 +17,9 @@ import tp6.sistemastock.Producto;
  */
 public class Main {
     
-    public static void separar(String s) {
+    public static void separar(String titulo) {
             System.out.println("\n*********************************************************************************************");
-            System.out.println("\n" + s + "\n");
+            System.out.println("\n" + titulo + "\n");
         }
 
     public static void main(String[] args) {
@@ -136,6 +139,59 @@ public class Main {
         
         separar("Caso práctico III: Sistema académico");
         
+        Universidad utn = new Universidad("UTN");
+        Profesor p1 = new Profesor("p01", "Fernando Fernandez", "Química");
+        Profesor p2 = new Profesor("p02", "Martín Martínez", "Programación");
+        Profesor p3 = new Profesor("p03", "Rosa Rosales", "Física");
+        utn.agregarProfesor(p1);
+        utn.agregarProfesor(p2);
+        utn.agregarProfesor(p3);
+        Curso c1 = new Curso("c01", "Química Orgánica");
+        Curso c2 = new Curso("c02", "Programación I");
+        Curso c3 = new Curso("c03", "Física I");
+        Curso c4 = new Curso("c04", "Programación II");
+        Curso c5 = new Curso("c05", "Probabilidad y estadística");
+        utn.agregarCurso(c1);
+        utn.agregarCurso(c2);
+        utn.agregarCurso(c3);
+        utn.agregarCurso(c4);
+        utn.agregarCurso(c5);
+        
+        System.out.println("Se agregan los siguientes cursos y profesores:\n");
+        utn.listarCursos();
+        System.out.println();
+        utn.listarProfesores();
+        
+        System.out.println("\nSe asignan pprrofesores a algunos cursos:\n");
+        
+        utn.asignarProfesorACurso("c01", "p01");
+        utn.asignarProfesorACurso("c02", "p02");
+        utn.asignarProfesorACurso("c03", "p03");
+        utn.asignarProfesorACurso("c04", "p02");
+        
+        utn.listarCursos();
+        
+        System.out.println("\nCambiar el profesor de un curso y verificar que ambos lados quedan sincronizados:\n");
+        
+        utn.asignarProfesorACurso("c05", "p03");
+        utn.buscarCursoPorCodigo("c05").mostrarInfo();
+        System.out.println();
+        utn.buscarProfesorPorId("p03").listarCursos();
+        
+        System.out.println("\nLista de cursos del profesor Martínez antes de eliminar un curso:\n");
+        
+        utn.buscarProfesorPorId("p02").listarCursos();
+        utn.eliminarCurso("c04");
+        System.out.println("\nLista de cursos del profesor Martínez luego de eliminar un curso:\n");
+        utn.buscarProfesorPorId("p02").listarCursos();
+        
+        System.out.println("\nEstado del curso Programación I luego de eliminar al profesor Martínez:\n");
+        utn.eliminarProfesor("p02");
+        utn.buscarCursoPorCodigo("c02").mostrarInfo();
+        
+        System.out.println("\nCantidad de cursos por profesor:\n");
+        
+        utn.listarProfesores();
     }
     
 }
